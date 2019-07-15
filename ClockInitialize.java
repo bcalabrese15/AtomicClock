@@ -12,13 +12,19 @@ public class ClockInitialize
 {
 	public static final String SERVER = "129.6.15.29";//NIST, Gaithersburg, Maryland, time-b-g.nist.gov 
 	public static final int PORT = 13;
+	public static String temp;
 	public static void serverCall()
 	{
 		//Get data from server
 		try {
-			Socket serverData = new Socket(SERVER, PORT);
+			Socket serverData = new Socket(SERVER, PORT); //connects to the server and port
 			BufferedReader byteData = new BufferedReader
-					(new InputStreamReader(serverData.getInputStream()));
+					(new InputStreamReader(serverData.getInputStream())); //created bufferedreader(?) from the server
+			 while (true) {
+		          if ( (temp = byteData.readLine()).indexOf("*") > -1) {
+		             break; //if the bufferedreader encounters a "*", the reader stops(?)
+		          }
+		       }
 		} catch (UnknownHostException e) {
 			System.out.println("UnknownHostException");
 			e.printStackTrace();
@@ -26,12 +32,12 @@ public class ClockInitialize
 			System.out.println("IOException");
 			e.printStackTrace();
 		}
-		
-		//Do I need a return statement? Maybe
 	}
 	public String toString()
 	{
 		//Returns the time in String form.
-		return "a";
+		ClockInitialize c = new ClockInitialize();
+		c.serverCall(); //initialize and call the server
+		return temp;//i'll need to replace this
 	}
 }
